@@ -49,3 +49,4 @@ through a [GitHub issue][10].
 
 
 [10]: https://github.com/instrumentisto/rsync-ssh-docker-image/issues
+[12]: https://hub.docker.com/_/alpine
