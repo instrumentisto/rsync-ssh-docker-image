@@ -11,13 +11,8 @@ IMAGE_NAME := instrumentisto/rsync-ssh
 VERSION ?= latest
 TAGS ?= latest
 
-no-cache ?= no
-
-
 
 comma := ,
-empty :=
-space := $(empty) $(empty)
 eq = $(if $(or $(1),$(2)),$(and $(findstring $(1),$(2)),\
                                 $(findstring $(2),$(1))),1)
 
@@ -26,44 +21,53 @@ eq = $(if $(or $(1),$(2)),$(and $(findstring $(1),$(2)),\
 # Build Docker image.
 #
 # Usage:
-#	make image [no-cache=(yes|no)] [VERSION=]
-
-no-cache-arg = $(if $(call eq, $(no-cache), yes), --no-cache, $(empty))
+#	make image [VERSION=<image-version>]
+#	           [no-cache=(no|yes)]
 
 image:
-	docker build $(no-cache-arg) -t $(IMAGE_NAME):$(VERSION) .
+	docker build --network=host --force-rm \
+		$(if $(call eq,$(no-cache),yes),--no-cache --pull,) \
+		-t $(IMAGE_NAME):$(VERSION) .
 
 
 
 # Tag Docker image with given tags.
 #
 # Usage:
-#	make tags [VERSION=] [TAGS=t1,t2,...]
-
-parsed-tags = $(subst $(comma), $(space), $(TAGS))
+#	make tags [VERSION=<image-version>]
+#	          [TAGS=<docker-tag-1>[,<docker-tag-2>...]]
 
 tags:
-	(set -e ; $(foreach tag, $(parsed-tags), \
-		docker tag $(IMAGE_NAME):$(VERSION) $(IMAGE_NAME):$(tag) ; \
-	))
+	$(foreach tag,$(subst $(comma), ,$(TAGS)),\
+		$(call tags.do,$(VERSION),$(tag)))
+define tags.do
+	$(eval from := $(strip $(1)))
+	$(eval to := $(strip $(2)))
+	docker tag $(IMAGE_NAME):$(from) $(IMAGE_NAME):$(to)
+endef
+
 
 
 # Manually push Docker images to Docker Hub.
 #
 # Usage:
-#	make push [TAGS=t1,t2,...]
+#	make push [TAGS=<docker-tag-1>[,<docker-tag-2>...]]
 
 push:
-	(set -e ; $(foreach tag, $(parsed-tags), \
-		docker push $(IMAGE_NAME):$(tag) ; \
-	))
+	$(foreach tag,$(subst $(comma), ,$(TAGS)),\
+		$(call push.do,$(tag)))
+define push.do
+	$(eval tag := $(strip $(1)))
+	docker push $(IMAGE_NAME):$(tag)
+endef
 
 
 
 # Make manual release of Docker images to Docker Hub.
 #
 # Usage:
-#	make release [no-cache=(yes|no)] [VERSION=] [TAGS=t1,t2,...]
+#	make release [VERSION=<image-version>] [no-cache=(no|yes)]
+#	             [TAGS=<docker-tag-1>[,<docker-tag-2>...]]
 
 release: | image tags push
 
