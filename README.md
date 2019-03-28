@@ -24,6 +24,12 @@ Just prepend `rsync`/`ssh` command with `docker run instrumentisto/rsync-ssh`.
 docker run --rm -it instrumentisto/rsync-ssh rsync --help
 ```
 
+Transfer file from remote host without rsync.
+
+```bash
+rsync -avz --rsync-path="docker run -i --rm -v <remote soruce path>:/mnt instrumentisto/rsync-ssh rsync" <remote host>:/mnt/ <local dest path>
+```
+
 
 
 
