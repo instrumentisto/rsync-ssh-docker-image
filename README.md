@@ -24,6 +24,12 @@ Just prepend `rsync`/`ssh` command with `docker run instrumentisto/rsync-ssh`.
 docker run --rm -i instrumentisto/rsync-ssh rsync --help
 ```
 
+Transfert data from volume to local folder
+```bash
+docker run --rm -i -v <volume name>:/volume -v $(pwd):/mnt instrumentisto/rsync-ssh \
+    rsync -avz /volume/ /mnt/
+```
+
 Transfer file from remote host with rsync to local host without rsync
 
 ```bash 
