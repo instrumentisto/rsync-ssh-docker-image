@@ -18,35 +18,34 @@ delta encoding, and is used for minimizing network usage. Zlib may be used for a
 
 ## How to use this image
 
-Just prepend `rsync`/`ssh` command with `docker run instrumentisto/rsync-ssh`.
-
+Just prepend `rsync`/`ssh` command with `docker run instrumentisto/rsync-ssh`:
 ```bash
 docker run --rm -i instrumentisto/rsync-ssh rsync --help
 ```
 
-Transfert data from volume to local folder
+Transferring data from volume to local folder:
 ```bash
-docker run --rm -i -v <volume name>:/volume -v $(pwd):/mnt instrumentisto/rsync-ssh \
+docker run --rm -i -v <volume-name>:/volume -v $(pwd):/mnt instrumentisto/rsync-ssh \
     rsync -avz /volume/ /mnt/
 ```
 
-Transfer file from remote host with rsync to local host without rsync
-
+Transferring file from remote host with `rsync` to local host without `rsync`:
 ```bash 
-docker run --rm -i -v <local dest path>:/mnt instrumentisto/rsync-ssh rsync -avz <remote host>:<remote soruce path> /mnt/
+docker run --rm -i -v <local-dest-path>:/mnt instrumentisto/rsync-ssh \
+    rsync -avz <remote host>:<remote soruce path> /mnt/
 ```
 
-Transfer file from remote host without rsync to local host with rsync
-
+Transferring file from remote host without `rsync` to local host with `rsync`:
 ```bash
-rsync -avz --rsync-path="docker run --rm -i -v <remote soruce path>:/mnt instrumentisto/rsync-ssh rsync" <remote host>:/mnt/ <local dest path>
+rsync -avz --rsync-path="docker run --rm -i -v <remote-src-path>:/mnt instrumentisto/rsync-ssh rsync" \
+    <remote host>:/mnt/ <local-dest-path>
 ```
 
-Transfer file from remote host without rsync to local host without rsync
-
+Transfer file from remote host without `rsync` to local host without `rsync`:
 ```bash
-docker run --rm -i -v <local dest path>:/mnt instrumentisto/rsync-ssh \
-    rsync -avz --rsync-path="docker run --rm -i -v <remote soruce path>:/mnt instrumentisto/rsync-ssh rsync" <remote host>:/mnt/ /mnt/
+docker run --rm -i -v <local-dest-path>:/mnt instrumentisto/rsync-ssh \
+    rsync -avz --rsync-path="docker run --rm -i -v <remote-src-path>:/mnt instrumentisto/rsync-ssh rsync" \
+        <remote-host>:/mnt/ /mnt/
 ```
 
 
