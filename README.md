@@ -1,7 +1,7 @@
 Rsync + SSH Docker Image
 ========================
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/instrumentisto/rsync-ssh.svg)](https://hub.docker.com/r/instrumentisto/rsync-ssh) [![Based on](https://img.shields.io/badge/based%20on-alpine-blue.svg)][12] [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/LICENSE.md)
+[![Docker Pulls](https://img.shields.io/docker/pulls/instrumentisto/rsync-ssh.svg)](https://hub.docker.com/r/instrumentisto/rsync-ssh) [![Based on](https://img.shields.io/badge/based%20on-alpine-blue.svg)][12]
 
 
 
@@ -51,6 +51,20 @@ docker run --rm -i -v <local-dest-path>:/mnt instrumentisto/rsync-ssh \
 
 
 
+## License
+
+Rsync is licensed under [GNU GPL version 3 license][93].  
+OpenSSH Portable is licensed under [BSD licence][94].
+
+As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
+
+As for any pre-built image usage, it is the image user's responsibility to ensure that any use of this image complies with any relevant licenses for all software contained within.
+
+The [sources][92] for producing `instrumentisto/rsync-ssh` Docker images are licensed under [Blue Oak Model License 1.0.0][91].
+
+
+
+
 ## Issues
 
 We can't notice comments in the DockerHub, so don't use them for reporting issue or asking question.
@@ -63,3 +77,7 @@ If you have any problems with or questions about this image, please contact us t
 
 [10]: https://github.com/instrumentisto/rsync-ssh-docker-image/issues
 [12]: https://hub.docker.com/_/alpine
+[91]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/LICENSE.md
+[92]: https://github.com/instrumentisto/rsync-ssh-docker-image
+[93]: https://pserver.samba.org/rsync/GPL.html
+[94]: https://github.com/openssh/openssh-portable/blob/master/LICENCE
