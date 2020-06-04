@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/alpine/
-FROM alpine:3.11
+FROM alpine:3.12
 
 MAINTAINER Instrumentisto Team <developer@instrumentisto.com>
 
