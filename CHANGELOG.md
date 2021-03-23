@@ -6,6 +6,18 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.13-r0] · 2021-03-23
+[alpine3.13-r0]: /../../tree/alpine3.13-r0
+
+[Diff](/../../compare/alpine3.12-r0...alpine3.13-r0)
+
+### Upgraded
+
+- [Alpine Linux] 3.13: <https://www.alpinelinux.org/posts/Alpine-3.13.0-released.html>
+
+
+
+
 ## [alpine3.12-r0] · 2021-03-23
 [alpine3.12-r0]: /../../tree/alpine3.12-r0
 

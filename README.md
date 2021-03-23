@@ -14,6 +14,13 @@ Rsync + SSH Docker image
 
 
 
+## Supported tags and respective `Dockerfile` links
+
+- [`alpine3.13-r0`, `alpine3.13`, `alpine`, `latest`][d1]
+
+
+
+
 ## What is Rsync and SSH?
 
 SSH (Secure Shell) is a cryptographic network protocol for operating network services securely over an unsecured network. The best known example application is for remote login to computer systems by users.
@@ -84,9 +91,12 @@ If you have any problems with or questions about this image, please contact us t
 
 
 [DockerHub]: https://hub.docker.com
+
 [10]: https://github.com/instrumentisto/rsync-ssh-docker-image/issues
-[12]: https://hub.docker.com/_/alpine
+
 [91]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/LICENSE.md
 [92]: https://github.com/instrumentisto/rsync-ssh-docker-image
 [93]: https://pserver.samba.org/rsync/GPL.html
 [94]: https://github.com/openssh/openssh-portable/blob/master/LICENCE
+
+[d1]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/Dockerfile
