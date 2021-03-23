@@ -1,7 +1,15 @@
-Rsync + SSH Docker Image
+Rsync + SSH Docker image
 ========================
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/instrumentisto/rsync-ssh.svg)](https://hub.docker.com/r/instrumentisto/rsync-ssh) [![Based on](https://img.shields.io/badge/based%20on-alpine-blue.svg)][12]
+[![Release](https://img.shields.io/github/v/release/instrumentisto/rsync-ssh-docker-image "Release")](https://github.com/instrumentisto/rsync-ssh-docker-image/releases)
+[![CI](https://github.com/instrumentisto/rsync-ssh-docker-image/workflows/CI/badge.svg?branch=master "CI")](https://github.com/instrumentisto/rsync-ssh-docker-image/actions?query=workflow%3ACI+branch%3Amaster)
+[![Docker Hub](https://img.shields.io/docker/pulls/instrumentisto/rsync-ssh?label=Docker%20Hub%20pulls "Docker Hub pulls")](https://hub.docker.com/r/instrumentisto/rsync-ssh)
+
+[Docker Hub](https://hub.docker.com/r/instrumentisto/rsync-ssh)
+| [GitHub Container Registry](https://github.com/orgs/instrumentisto/packages/container/package/rsync-ssh)
+| [Quay.io](https://quay.io/repository/instrumentisto/rsync-ssh)
+
+[Changelog](https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/CHANGELOG.md)
 
 
 
@@ -67,7 +75,7 @@ The [sources][92] for producing `instrumentisto/rsync-ssh` Docker images are lic
 
 ## Issues
 
-We can't notice comments in the DockerHub, so don't use them for reporting issue or asking question.
+We can't notice comments in the [DockerHub] (or other container registries) so don't use them for reporting issue or asking question.
 
 If you have any problems with or questions about this image, please contact us through a [GitHub issue][10].
 
@@ -75,6 +83,7 @@ If you have any problems with or questions about this image, please contact us t
 
 
 
+[DockerHub]: https://hub.docker.com
 [10]: https://github.com/instrumentisto/rsync-ssh-docker-image/issues
 [12]: https://hub.docker.com/_/alpine
 [91]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/LICENSE.md

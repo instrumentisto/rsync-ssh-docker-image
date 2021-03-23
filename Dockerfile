@@ -1,9 +1,14 @@
-# https://hub.docker.com/_/alpine/
-FROM alpine:3.12
+# https://hub.docker.com/_/alpine
+ARG alpine_ver=3.12
+FROM alpine:${alpine_ver}
 
-MAINTAINER Instrumentisto Team <developer@instrumentisto.com>
+ARG build_rev=0
+
+LABEL org.opencontainers.image.source="\
+    https://github.com/instrumentisto/rsync-ssh-docker-image"
 
 
+# Install rsync and SSH.
 RUN apk update \
  && apk upgrade \
  && apk add --no-cache \
