@@ -6,6 +6,20 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.13-r1] · 2021-03-23
+[alpine3.13-r1]: /../../tree/alpine3.13-r1
+
+[Diff](/../../compare/alpine3.13-r0...alpine3.13-r1)
+
+### Added
+
+- Support of `linux/arm64`, `linux/arm/v6`, `linux/arm/v7`, `linux/ppc64le` and `linux/s390x` platforms ([#5]).
+
+[#5]: /../../issues/5
+
+
+
+
 ## [alpine3.13-r0] · 2021-03-23
 [alpine3.13-r0]: /../../tree/alpine3.13-r0
 
