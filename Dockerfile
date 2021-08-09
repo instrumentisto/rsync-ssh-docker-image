@@ -1,8 +1,8 @@
 # https://hub.docker.com/_/alpine
 ARG alpine_ver=3.14
-FROM alpine:${alpine_ver}
+FROM alpine:${alpine_ver}.1
 
-ARG build_rev=0
+ARG build_rev=1
 
 LABEL org.opencontainers.image.source="\
     https://github.com/instrumentisto/rsync-ssh-docker-image"
