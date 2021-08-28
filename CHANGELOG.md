@@ -6,6 +6,18 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.14-r2] · 2021-08-28
+[alpine3.14-r2]: /../../tree/alpine3.14-r2
+
+[Diff](/../../compare/alpine3.14-r1...alpine3.14-r2)
+
+### Security updated
+
+- [Alpine Linux] 3.14.2: <https://github.com/docker-library/official-images/commit/b54effe0cc65795f29752ecc197328a04326a6f2>
+
+
+
+
 ## [alpine3.14-r1] · 2021-08-09
 [alpine3.14-r1]: /../../tree/alpine3.14-r1
 
