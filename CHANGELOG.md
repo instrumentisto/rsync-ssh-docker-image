@@ -6,6 +6,21 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.15-r1] · 2021-12-21
+[alpine3.15-r1]: /../../tree/alpine3.15-r1
+
+[Diff](/../../compare/alpine3.15-r0...alpine3.15-r1)
+
+### Security updated
+
+- [Alpine Linux] packages to fix [CVE-2021-3520] ([#9]).
+
+[#9]: /../../issues/9
+[CVE-2021-3520]: https://avd.aquasec.com/nvd/cve-2021-3520
+
+
+
+
 ## [alpine3.15-r0] · 2021-11-25
 [alpine3.15-r0]: /../../tree/alpine3.15-r0
 
