@@ -1,10 +1,17 @@
 name: CI
 
 on:
-  pull_request:
   push:
+    branches: ["master"]
+    tags: ["*"]
+  pull_request:
+    branches: ["master"]
   schedule:
-    - cron: '3 7 * * 3'
+    - cron: "3 7 * * 3"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   PUBLISH: ${{ github.event_name == 'push'
