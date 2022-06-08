@@ -14,6 +14,7 @@ RUN apk update \
  && apk add --no-cache \
             rsync \
             openssh-client-default \
+            sshpass \
             ca-certificates \
  && update-ca-certificates \
  && rm -rf /var/cache/apk/*
