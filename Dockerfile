@@ -2,7 +2,7 @@
 ARG alpine_ver=3.16
 FROM alpine:${alpine_ver}
 
-ARG build_rev=0
+ARG build_rev=1
 
 LABEL org.opencontainers.image.source="\
     https://github.com/instrumentisto/rsync-ssh-docker-image"
@@ -14,6 +14,7 @@ RUN apk update \
  && apk add --no-cache \
             rsync \
             openssh-client-default \
+            sshpass \
             ca-certificates \
  && update-ca-certificates \
  && rm -rf /var/cache/apk/*

@@ -6,6 +6,21 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.16-r1] · 2022-06-09
+[alpine3.16-r1]: /../../tree/alpine3.16-r1
+
+[Diff](/../../compare/alpine3.16-r0...alpine3.16-r1)
+
+### Added
+
+- [`sshpass`] utility. ([#13])
+
+[#13]: /../../pull/13
+[`sshpass`]: https://sourceforge.net/projects/sshpass
+
+
+
+
 ## [alpine3.16-r0] · 2022-05-24
 [alpine3.16-r0]: /../../tree/alpine3.16-r0
 
