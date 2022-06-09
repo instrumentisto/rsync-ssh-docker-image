@@ -4,11 +4,8 @@ FROM alpine:${alpine_ver}
 
 ARG build_rev=1
 
-LABEL org.opencontainers.image.source="\
-    https://github.com/instrumentisto/rsync-ssh-docker-image"
 
-
-# Install rsync and SSH.
+# Install Rsync and SSH.
 RUN apk update \
  && apk upgrade \
  && apk add --no-cache \

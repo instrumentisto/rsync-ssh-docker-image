@@ -74,11 +74,19 @@ define docker.buildx
 	$(eval platform := $(strip $(3)))
 	$(eval no-cache := $(strip $(4)))
 	$(eval args := $(strip $(5)))
+	$(eval github_url := $(strip $(or $(GITHUB_SERVER_URL),https://github.com)))
+	$(eval github_repo := $(strip $(or $(GITHUB_REPOSITORY),\
+	                                   instrumentisto/rsync-ssh-docker-image)))
 	docker buildx build --force-rm $(args) \
 		--platform $(platform) \
 		$(if $(call eq,$(no-cache),yes),--no-cache --pull,) \
 		--build-arg alpine_ver=$(ALPINE_VER) \
 		--build-arg build_rev=$(BUILD_REV) \
+		--label org.opencontainers.image.source=$(github_url)/$(github_repo) \
+		--label org.opencontainers.image.revision=$(strip \
+			$(shell git show --pretty=format:%H --no-patch)) \
+		--label org.opencontainers.image.version=$(strip \
+			$(shell git describe --tags --dirty)) \
 		-t $(namespace)/$(NAME):$(tag) .
 endef
 
