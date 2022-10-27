@@ -23,8 +23,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: ["amd64", "arm32v6", "arm32v7", "arm64v8", "ppc64le", "s390x"]
         os: ["linux"]
+        arch: ["amd64", "arm32v6", "arm32v7", "arm64v8", "ppc64le", "s390x"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -58,12 +58,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: ["amd64", "arm32v6", "arm32v7", "arm64v8", "ppc64le", "s390x"]
         os: ["linux"]
+        arch: ["amd64", "arm32v6", "arm32v7", "arm64v8", "ppc64le", "s390x"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: make npm.install
+
+      - name: Enable experimental features of Docker Daemon
+        run: |
+          echo "$(cat /etc/docker/daemon.json)" '{"experimental": true}' \
+          | jq --slurp 'reduce .[] as $item ({}; . * $item)' \
+          | sudo tee /etc/docker/daemon.json
+          sudo systemctl restart docker
 
       - uses: actions/download-artifact@v3
         with:

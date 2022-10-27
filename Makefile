@@ -191,6 +191,7 @@ endif
 	PLATFORM=$(or $(call dockerify,$(platform)),linux/amd64) \
 	node_modules/.bin/bats \
 		--timing $(if $(call eq,$(CI),),--pretty,--formatter tap) \
+		--print-output-on-failure \
 		tests/main.bats
 
 
