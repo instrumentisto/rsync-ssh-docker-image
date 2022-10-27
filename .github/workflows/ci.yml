@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches: ["master"]
-    tags: ["*"]
+    tags: ["alpine*"]
   pull_request:
     branches: ["master"]
   schedule:
@@ -13,12 +13,104 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  PUBLISH: ${{ github.event_name == 'push'
-               && startsWith(github.ref, 'refs/tags/alpine') }}
-
 jobs:
+
+  ############
+  # Building #
+  ############
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: ["amd64", "arm32v6", "arm32v7", "arm64v8", "ppc64le", "s390x"]
+        os: ["linux"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # for correct image labeling via `git describe --tags`
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+
+      - run: make docker.image no-cache=yes
+                  platform=${{ matrix.os }}/${{ matrix.arch }}
+                  tag=build-${{ github.run_number }}-${{ matrix.os }}-${{ matrix.arch }}
+
+      - run: make docker.tar
+                  to-file=.cache/image-${{ matrix.os }}-${{ matrix.arch }}.tar
+                  tags=build-${{ github.run_number }}-${{ matrix.os }}-${{ matrix.arch }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}-${{ matrix.arch }}-${{ github.run_number }}
+          path: .cache/image-${{ matrix.os }}-${{ matrix.arch }}.tar
+          retention-days: 1
+
+
+
+
+  ###########
+  # Testing #
+  ###########
+
+  test:
+    needs: ["build"]
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: ["amd64", "arm32v6", "arm32v7", "arm64v8", "ppc64le", "s390x"]
+        os: ["linux"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: make npm.install
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.os }}-${{ matrix.arch }}-${{ github.run_number }}
+          path: .cache/
+      - run: make docker.untar
+                  from-file=.cache/image-${{ matrix.os }}-${{ matrix.arch }}.tar
+
+      - run: make test.docker
+                  platforms=${{ matrix.os }}/${{ matrix.arch }}
+                  tag=build-${{ github.run_number }}-${{ matrix.os }}-${{ matrix.arch }}
+
+
+
+
+  #############
+  # Releasing #
+  #############
+
+  publish:
+    needs: ["build", "test"]
+    if: ${{ github.event_name == 'push'
+         && startsWith(github.ref, 'refs/tags/') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        registry: ["docker.io", "ghcr.io", "quay.io"]
+    runs-on: ubuntu-latest
+    steps:
+      # Skip if this is fork and no credentials are provided.
+      - id: skip
+        run: echo "no=${{ !(
+               github.repository_owner != 'instrumentisto'
+               && ((matrix.registry == 'quay.io'
+                    && secrets.QUAYIO_ROBOT_USER == '')
+                || (matrix.registry == 'docker.io'
+                    && secrets.DOCKERHUB_BOT_USER == ''))
+             ) }}" >> $GITHUB_OUTPUT
+
+
+
+  #env:
+  #  PUBLISH: ${{ github.event_name == 'push'
+  #    && startsWith(github.ref, 'refs/tags/alpine') }}
+
   buildx:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
