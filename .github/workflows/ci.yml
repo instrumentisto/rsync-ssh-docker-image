@@ -80,7 +80,7 @@ jobs:
                   from-file=.cache/image-${{ matrix.os }}-${{ matrix.arch }}.tar
 
       - run: make test.docker
-                  platforms=${{ matrix.os }}/${{ matrix.arch }}
+                  platform=${{ matrix.os }}/${{ matrix.arch }}
                   tag=build-${{ github.run_number }}-${{ matrix.os }}-${{ matrix.arch }}
 
 
