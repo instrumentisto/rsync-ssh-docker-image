@@ -21,6 +21,13 @@ Rsync + SSH Docker image
 
 
 
+## Supported platforms
+
+- `linux`: `amd64`, `arm32v6`, `arm32v7`, `arm64v8`, `ppc64le`, `s390x`
+
+
+
+
 ## What is Rsync and SSH?
 
 SSH (Secure Shell) is a cryptographic network protocol for operating network services securely over an unsecured network. The best known example application is for remote login to computer systems by users.
@@ -66,6 +73,45 @@ docker run --rm -i -v <local-dest-path>:/mnt instrumentisto/rsync-ssh \
 
 
 
+## Image versions
+
+
+### `alpine`
+
+Latest tag of the latest [Alpine][1] version.
+
+This image is based on the popular [Alpine Linux project][1], available in [the alpine official image][2]. [Alpine Linux][1] is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
+
+This is a multi-platform image.
+
+
+### `alpine<X.Y>`
+
+Latest tag of the latest minor `X.Y` [Alpine][1] version.
+
+This is a multi-platform image.
+
+
+### `alpine<X.Y>-r<N>`
+
+Concrete `N` image revision tag of the concrete minor `X.Y` [Alpine][1] version.
+
+Once build, it's never updated.
+
+This is a multi-platform image.
+
+
+### `alpine<X.Y>-r<N>-<os>-<arch>`
+
+Concrete `N` image revision tag of the concrete minor `X.Y` [Alpine][1] version on the concrete `os` and `arch`.
+
+Once build, it's never updated.
+
+This is a single-platform image.
+
+
+
+
 ## License
 
 Rsync is licensed under [GNU GPL version 3 license][93].  
@@ -89,8 +135,10 @@ If you have any problems with or questions about this image, please contact us t
 
 
 
-
 [DockerHub]: https://hub.docker.com
+
+[1]: http://alpinelinux.org
+[2]: https://hub.docker.com/_/alpine
 
 [10]: https://github.com/instrumentisto/rsync-ssh-docker-image/issues
 
