@@ -34,7 +34,10 @@ jobs:
       - uses: docker/setup-buildx-action@v2
 
       - run: |
-          for i in true false true; do
+          for i in true \
+                   false \
+                   true
+          do
             echo "$i"
             sh -c "$i"
           done
