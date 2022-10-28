@@ -2,14 +2,14 @@ Rsync + SSH Docker image
 ========================
 
 [![Release](https://img.shields.io/github/v/release/instrumentisto/rsync-ssh-docker-image "Release")](https://github.com/instrumentisto/rsync-ssh-docker-image/releases)
-[![CI](https://github.com/instrumentisto/rsync-ssh-docker-image/workflows/CI/badge.svg?branch=master "CI")](https://github.com/instrumentisto/rsync-ssh-docker-image/actions?query=workflow%3ACI+branch%3Amaster)
+[![CI](https://github.com/instrumentisto/rsync-ssh-docker-image/workflows/CI/badge.svg?branch=main "CI")](https://github.com/instrumentisto/rsync-ssh-docker-image/actions?query=workflow%3ACI+branch%3Amain)
 [![Docker Hub](https://img.shields.io/docker/pulls/instrumentisto/rsync-ssh?label=Docker%20Hub%20pulls "Docker Hub pulls")](https://hub.docker.com/r/instrumentisto/rsync-ssh)
 
 [Docker Hub](https://hub.docker.com/r/instrumentisto/rsync-ssh)
 | [GitHub Container Registry](https://github.com/orgs/instrumentisto/packages/container/package/rsync-ssh)
 | [Quay.io](https://quay.io/repository/instrumentisto/rsync-ssh)
 
-[Changelog](https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/CHANGELOG.md)
+[Changelog](https://github.com/instrumentisto/rsync-ssh-docker-image/blob/main/CHANGELOG.md)
 
 
 
@@ -142,9 +142,9 @@ If you have any problems with or questions about this image, please contact us t
 
 [10]: https://github.com/instrumentisto/rsync-ssh-docker-image/issues
 
-[91]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/LICENSE.md
+[91]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/main/LICENSE.md
 [92]: https://github.com/instrumentisto/rsync-ssh-docker-image
 [93]: https://pserver.samba.org/rsync/GPL.html
 [94]: https://github.com/openssh/openssh-portable/blob/master/LICENCE
 
-[d1]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/master/Dockerfile
+[d1]: https://github.com/instrumentisto/rsync-ssh-docker-image/blob/main/Dockerfile

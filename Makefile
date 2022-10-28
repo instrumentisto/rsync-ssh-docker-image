@@ -258,7 +258,7 @@ git.release:
 ifeq ($(shell git rev-parse $(git-release-tag) >/dev/null 2>&1 && echo "ok"),ok)
 	$(error "Git tag $(git-release-tag) already exists")
 endif
-	git tag $(git-release-tag) master
+	git tag $(git-release-tag) main
 	git push origin refs/tags/$(git-release-tag)
 
 
