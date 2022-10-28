@@ -50,6 +50,8 @@ push: docker.push
 
 release: git.release
 
+tags: docker.tags
+
 test: test.docker
 
 
@@ -59,43 +61,12 @@ test: test.docker
 # Docker commands #
 ###################
 
-docker-registries = $(strip $(if $(call eq,$(registries),),\
-                            $(REGISTRIES),$(subst $(comma), ,$(registries))))
-docker-tags = $(strip $(if $(call eq,$(tags),),\
-                      $(TAGS),$(subst $(comma), ,$(tags))))
+docker-registries = $(strip \
+	$(or $(subst $(comma), ,$(registries)),$(REGISTRIES)))
+docker-tags = $(strip $(or $(subst $(comma), ,$(tags)),$(TAGS)))
 
 
-docker-namespaces = $(strip $(if $(call eq,$(namespaces),),\
-                            $(NAMESPACES),$(subst $(comma), ,$(namespaces))))
-docker-platforms = $(strip $(if $(call eq,$(platforms),),\
-                           $(PLATFORMS),$(subst $(comma), ,$(platforms))))
-
-# Runs `docker buildx build` command allowing to customize it for the purpose of
-# re-tagging or pushing.
-define docker.buildx
-	$(eval namespace := $(strip $(1)))
-	$(eval tag := $(strip $(2)))
-	$(eval platform := $(strip $(3)))
-	$(eval no-cache := $(strip $(4)))
-	$(eval args := $(strip $(5)))
-	$(eval github_url := $(strip $(or $(GITHUB_SERVER_URL),https://github.com)))
-	$(eval github_repo := $(strip $(or $(GITHUB_REPOSITORY),\
-	                                   instrumentisto/rsync-ssh-docker-image)))
-	docker buildx build --force-rm $(args) \
-		--platform $(platform) \
-		$(if $(call eq,$(no-cache),yes),--no-cache --pull,) \
-		--build-arg alpine_ver=$(ALPINE_VER) \
-		--build-arg build_rev=$(BUILD_REV) \
-		--label org.opencontainers.image.source=$(github_url)/$(github_repo) \
-		--label org.opencontainers.image.revision=$(strip \
-			$(shell git show --pretty=format:%H --no-patch)) \
-		--label org.opencontainers.image.version=$(strip \
-			$(shell git describe --tags --dirty)) \
-		-t $(namespace)/$(NAME):$(tag) .
-endef
-
-
-# Build Docker image with the given tag.
+# Build single-platform Docker image with the given tag.
 #
 # Usage:
 #	make docker.image [tag=($(VERSION)|<docker-tag>)]] [no-cache=(no|yes)]
@@ -120,28 +91,43 @@ docker.image:
 		--load -t $(OWNER)/$(NAME):$(or $(tag),$(VERSION)) ./
 
 
-# Push Docker images to their repositories (container registries),
-# along with the required multi-arch manifests.
+# Manually push single-platform Docker images to container registries.
 #
 # Usage:
-#	make docker.push
-#		[namespaces=($(NAMESPACES)|<prefix-1>[,<prefix-2>...])]
-#		[tags=($(TAGS)|<tag-1>[,<tag-2>...])]
-#		[platforms=($(PLATFORMS)|<platform-1>[,<platform-2>...])]
-#		[ALPINE_VER=<alpine-version>]
-#		[BUILD_REV=<build-revision>]
+#	make docker.push [tags=($(TAGS)|<docker-tag-1>[,<docker-tag-2>...])]
+#	                 [registries=($(REGISTRIES)|<prefix-1>[,<prefix-2>...])]
 
 docker.push:
-	$(foreach namespace,$(docker-namespaces),\
-		$(foreach tag,$(docker-tags),\
-			$(call docker.buildx,\
-				$(namespace),\
-				$(tag),\
-				$(shell echo "$(docker-platforms)" | tr -s '[:blank:]' ','),,\
-				--push)))
+	$(foreach tag,$(subst $(comma), ,$(docker-tags)),\
+		$(foreach registry,$(subst $(comma), ,$(docker-registries)),\
+			$(call docker.push.do,$(registry),$(tag))))
+define docker.push.do
+	$(eval repo := $(strip $(1)))
+	$(eval tag := $(strip $(2)))
+	docker push $(repo)/$(OWNER)/$(NAME):$(tag)
+endef
 
 
-# Save Docker images to a tarball file.
+# Tag single-platform Docker image with the given tags.
+#
+# Usage:
+#	make docker.tags [of=($(VERSION)|<docker-tag>)]
+#	                 [tags=($(TAGS)|<docker-tag-1>[,<docker-tag-2>...])]
+#	                 [registries=($(REGISTRIES)|<prefix-1>[,<prefix-2>...])]
+
+docker.tags:
+	$(foreach tag,$(subst $(comma), ,$(docker-tags)),\
+		$(foreach registry,$(subst $(comma), ,$(docker-registries)),\
+			$(call docker.tags.do,$(or $(of),$(VERSION)),$(registry),$(tag))))
+define docker.tags.do
+	$(eval from := $(strip $(1)))
+	$(eval repo := $(strip $(2)))
+	$(eval to := $(strip $(3)))
+	docker tag $(OWNER)/$(NAME):$(from) $(repo)/$(OWNER)/$(NAME):$(to)
+endef
+
+
+# Save single-platform Docker images to a tarball file.
 #
 # Usage:
 #	make docker.tar [to-file=(.cache/image.tar|<file-path>)]
@@ -159,7 +145,7 @@ docker.tar:
 docker.test: test.docker
 
 
-# Load Docker images from a tarball file.
+# Load single-platform Docker images from a tarball file.
 #
 # Usage:
 #	make docker.untar [from-file=(.cache/image.tar|<file-path>)]
@@ -227,7 +213,7 @@ endif
 # Usage:
 #	make git.release [ver=($(VERSION)|<proj-ver>)]
 
-git-release-tag = $(strip $(if $(call eq,$(ver),),$(VERSION),$(ver)))
+git-release-tag = $(strip $(or $(ver),$(VERSION)))
 
 git.release:
 ifeq ($(shell git rev-parse $(git-release-tag) >/dev/null 2>&1 && echo "ok"),ok)
@@ -244,7 +230,8 @@ endif
 ##################
 
 .PHONY: image push release test \
-        docker.image docker.push docker.tar docker.test docker.untar \
+        docker.image docker.push docker.tags docker.tar docker.test \
+        docker.untar \
         git.release \
         npm.install \
         test.docker
