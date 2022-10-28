@@ -6,6 +6,20 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.16-r4] · 2022-10-28
+[alpine3.16-r4]: /../../tree/alpine3.16-r4
+
+[Diff](/../../compare/alpine3.16-r3...alpine3.16-r4)
+
+### Added
+
+- Support of `TZ` environment variable. ([#14])
+
+[#14]: /../../pull/14
+
+
+
+
 ## [alpine3.16-r3] · 2022-08-10
 [alpine3.16-r3]: /../../tree/alpine3.16-r3
 
