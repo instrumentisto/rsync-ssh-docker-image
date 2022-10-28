@@ -9,10 +9,9 @@ ARG build_rev=3
 RUN apk update \
  && apk upgrade \
  && apk add --no-cache \
-            tzdata \
             rsync \
             openssh-client-default \
             sshpass \
-            ca-certificates \
+            ca-certificates tzdata \
  && update-ca-certificates \
  && rm -rf /var/cache/apk/*
