@@ -46,6 +46,8 @@ VERSION ?= $(word 1,$(subst $(comma), ,$(TAGS)))
 
 image: docker.image
 
+manifest: docker.manifest
+
 push: docker.push
 
 release: git.release
@@ -89,6 +91,43 @@ docker.image:
 		--label org.opencontainers.image.version=$(strip \
 			$(shell git describe --tags --dirty)) \
 		--load -t $(OWNER)/$(NAME):$(or $(tag),$(VERSION)) ./
+
+
+# Unite multiple single-platform Docker images as a multi-platform Docker image.
+#
+# WARNING: All the single-platform Docker images should be present on their
+#          remote registry. This is the limitation imposed by `docker manifest`
+#          command.
+#
+#	make docker.manifest [amend=(yes|no)] [push=(no|yes)]
+#	                     [of=($(VERSION)|<docker-tag-1>[,<docker-tag-2>...])]
+#	                     [tags=($(TAGS)|<docker-tag-1>[,<docker-tag-2>...])]
+#	                     [registries=($(REGISTRIES)|<prefix-1>[,<prefix-2>...])]
+
+docker.manifest:
+	$(foreach tag,$(subst $(comma), ,$(docker-tags)),\
+		$(foreach registry,$(subst $(comma), ,$(docker-registries)),\
+			$(call docker.manifest.create.do,$(or $(of),$(VERSION)),\
+			                                 $(registry),$(tag))))
+ifeq ($(push),yes)
+	$(foreach tag,$(subst $(comma), ,$(docker-tags)),\
+		$(foreach registry,$(subst $(comma), ,$(docker-registries)),\
+			$(call docker.manifest.push.do,$(registry),$(tag))))
+endif
+define docker.manifest.create.do
+	$(eval froms := $(strip $(1)))
+	$(eval repo := $(strip $(2)))
+	$(eval tag := $(strip $(3)))
+	docker manifest create $(if $(call eq,$(amend),no),,--amend) \
+		$(repo)/$(OWNER)/$(NAME):$(tag) \
+		$(foreach from,$(subst $(comma), ,$(froms)),\
+			$(repo)/$(OWNER)/$(NAME):$(from))
+endef
+define docker.manifest.push.do
+	$(eval repo := $(strip $(1)))
+	$(eval tag := $(strip $(2)))
+	docker manifest push $(repo)/$(OWNER)/$(NAME):$(tag)
+endef
 
 
 # Manually push single-platform Docker images to container registries.
@@ -229,9 +268,9 @@ endif
 # .PHONY section #
 ##################
 
-.PHONY: image push release test \
-        docker.image docker.push docker.tags docker.tar docker.test \
-        docker.untar \
+.PHONY: image manifest push release test \
+        docker.image docker.manifest docker.push docker.tags docker.tar \
+        docker.test docker.untar \
         git.release \
         npm.install \
         test.docker

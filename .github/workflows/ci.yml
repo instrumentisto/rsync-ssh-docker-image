@@ -3,8 +3,7 @@ name: CI
 on:
   push:
     branches: ["master"]
-    #tags: ["alpine*"]
-    tags: ["*"]
+    tags: ["alpine*"]
   pull_request:
     branches: ["master"]
   schedule:
@@ -83,7 +82,7 @@ jobs:
   # Releasing #
   #############
 
-  publish:
+  push:
     needs: ["build", "test"]
     if: ${{ github.event_name == 'push'
          && startsWith(github.ref, 'refs/tags/') }}
@@ -160,8 +159,16 @@ jobs:
                  registries=${{ matrix.registry }}
           done
         if: ${{ steps.skip.outputs.no == 'true' }}
-
-      # TODO: create and push docker manifest
+      - name: Tag and push multi-platform images
+        run: make docker.manifest push=yes
+                  registries=${{ matrix.registry }}
+                  of='${{ steps.version.outputs.group1 }}-linux-amd64
+                      ${{ steps.version.outputs.group1 }}-linux-arm32v6
+                      ${{ steps.version.outputs.group1 }}-linux-arm32v7
+                      ${{ steps.version.outputs.group1 }}-linux-arm64v8
+                      ${{ steps.version.outputs.group1 }}-linux-ppc64le
+                      ${{ steps.version.outputs.group1 }}-linux-s390x'
+        if: ${{ steps.skip.outputs.no == 'true' }}
 
       # On GitHub Container Registry README is automatically updated on pushes.
       - name: Update README on Docker Hub
@@ -186,41 +193,30 @@ jobs:
         if: ${{ steps.skip.outputs.no == 'true'
              && matrix.registry == 'quay.io' }}
 
-
-
-
-
-  #env:
-  #  PUBLISH: ${{ github.event_name == 'push'
-  #    && startsWith(github.ref, 'refs/tags/alpine') }}
-
-  buildx:
-    if: ${{ false }}
+  release-github:
+    name: release on GitHub
+    needs: ["push"]
+    if: ${{ github.event_name == 'push'
+         && startsWith(github.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Parse version from Git tag
+        id: version
+        uses: actions-ecosystem/action-regex-match@v2
         with:
-          fetch-depth: 0
-      - uses: docker/setup-qemu-action@v2
-      - uses: docker/setup-buildx-action@v2
+          text: ${{ github.ref }}
+          regex: '^refs/tags/(.+)$'
 
-      - run: make docker.push
-        if: ${{ env.PUBLISH == 'true' }}
-
-      - name: Parse release version from Git tag
-        id: release
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
-        if: ${{ env.PUBLISH == 'true' }}
       - name: Parse CHANGELOG link
         id: changelog
-        run: echo ::set-output name=LINK::https://github.com/${{ github.repository }}/blob/${{ steps.release.outputs.VERSION }}/CHANGELOG.md#$(sed -n '/^## \[${{ steps.release.outputs.VERSION }}\]/{s/^## \[\(.*\)\][^0-9]*\([0-9].*\)/\1--\2/;s/[^0-9a-z-]*//g;p;}' CHANGELOG.md)
-        if: ${{ env.PUBLISH == 'true' }}
-      - name: Release on GitHub
+        run: echo "link=${{ github.server_url }}/${{ github.repository }}/blob/${{ steps.version.outputs.group1 }}/CHANGELOG.md#$(sed -n '/^## \[${{ steps.version.outputs.group1 }}\]/{s/^## \[\(.*\)\][^0-9]*\([0-9].*\)/\1--\2/;s/[^0-9a-z-]*//g;p;}' CHANGELOG.md)"
+             >> $GITHUB_OUTPUT
+
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.release.outputs.VERSION }}
+          name: ${{ steps.version.outputs.group1 }}
           body: |
-            [Changelog](${{ steps.changelog.outputs.LINK }})
-        if: ${{ env.PUBLISH == 'true' }}
+            [Changelog](${{ steps.changelog.outputs.link }})
