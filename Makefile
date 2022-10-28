@@ -12,7 +12,8 @@ eq = $(if $(or $(1),$(2)),$(and $(findstring $(1),$(2)),\
 dockerify = $(strip $(if $(call eq,$(1),linux/arm32v6),linux/arm/v6,\
                     $(if $(call eq,$(1),linux/arm32v7),linux/arm/v7,\
                     $(if $(call eq,$(1),linux/arm64v8),linux/arm64/v8,\
-                                                       $(platform)))))
+                    $(if $(call eq,$(1),linux/i386),   linux/386,\
+                                                       $(platform))))))
 
 
 

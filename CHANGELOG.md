@@ -14,6 +14,7 @@ All user visible changes to this project will be documented in this file. This p
 ### Added
 
 - Support of `TZ` environment variable. ([#14])
+- Support of `linux/386` platform.
 
 [#14]: /../../pull/14
 
@@ -126,7 +127,7 @@ All user visible changes to this project will be documented in this file. This p
 
 ### Security updated
 
-- [Alpine Linux] packages to fix [CVE-2021-3520] ([#9]).
+- [Alpine Linux] packages to fix [CVE-2021-3520]. ([#9])
 
 [#9]: /../../issues/9
 [CVE-2021-3520]: https://avd.aquasec.com/nvd/cve-2021-3520
@@ -237,7 +238,7 @@ All user visible changes to this project will be documented in this file. This p
 
 ### Added
 
-- Support of `linux/arm64`, `linux/arm/v6`, `linux/arm/v7`, `linux/ppc64le` and `linux/s390x` platforms ([#5]).
+- Support of `linux/arm64/v8`, `linux/arm/v6`, `linux/arm/v7`, `linux/ppc64le` and `linux/s390x` platforms. ([#5])
 
 [#5]: /../../issues/5
 
