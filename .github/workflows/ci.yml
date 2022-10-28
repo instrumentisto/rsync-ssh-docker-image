@@ -34,9 +34,9 @@ jobs:
       - uses: docker/setup-buildx-action@v2
 
       - run: |
-          false
-          true
-
+          for i in true false; do
+            sh -c "$i"
+          done
 
       - run: make docker.image no-cache=yes
                   platform=${{ matrix.os }}/${{ matrix.arch }}
