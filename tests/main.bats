@@ -41,3 +41,13 @@
     'rsync --help'
   [ "$status" -eq 0 ]
 }
+
+
+@test "TZ env var works ok" {
+  run docker run --rm --pull never --platform $PLATFORM \
+                 -e TZ=America/Chicago \
+                 --entrypoint sh $IMAGE -c \
+    'date +%Z'
+  [ "$status" -eq 0 ]
+  [ "$output" = "CDT" ]
+}

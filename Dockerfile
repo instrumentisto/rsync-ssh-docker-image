@@ -1,8 +1,8 @@
 # https://hub.docker.com/_/alpine
 ARG alpine_ver=3.16
-FROM alpine:${alpine_ver}.2
+FROM alpine:${alpine_ver}
 
-ARG build_rev=3
+ARG build_rev=4
 
 
 # Install Rsync and SSH.
@@ -12,6 +12,6 @@ RUN apk update \
             rsync \
             openssh-client-default \
             sshpass \
-            ca-certificates \
+            ca-certificates tzdata \
  && update-ca-certificates \
  && rm -rf /var/cache/apk/*
