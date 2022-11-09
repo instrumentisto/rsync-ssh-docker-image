@@ -47,9 +47,9 @@
 
 @test "TZ env var works ok" {
   run docker run --rm --pull never --platform $PLATFORM \
-                 -e TZ=America/Chicago \
+                 -e TZ=Asia/Tokyo \
                  --entrypoint sh $IMAGE -c \
     'date +%Z'
   [ "$status" -eq 0 ]
-  [ "$output" = "CDT" ]
+  [ "$output" = "JST" ]
 }
