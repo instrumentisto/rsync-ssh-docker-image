@@ -1,8 +1,8 @@
 # https://hub.docker.com/_/alpine
-ARG alpine_ver=3.16
+ARG alpine_ver=3.17
 FROM alpine:${alpine_ver}
 
-ARG build_rev=4
+ARG build_rev=0
 
 
 # Install Rsync and SSH.
