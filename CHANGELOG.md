@@ -6,6 +6,18 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.17-r1] · 2023-01-10
+[alpine3.17-r1]: /../../tree/alpine3.17-r1
+
+[Diff](/../../compare/alpine3.17-r0...alpine3.17-r1)
+
+### Security updated
+
+- [Alpine Linux] 3.17.1: <https://github.com/docker-library/official-images/commit/0fea6bf535f1a863460c1d8c2c381e1e548fd220>
+
+
+
+
 ## [alpine3.17-r0] · 2022-11-23
 [alpine3.17-r0]: /../../tree/alpine3.17-r0
 
