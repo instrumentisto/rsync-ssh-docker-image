@@ -16,7 +16,7 @@ Rsync + SSH Docker image
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`alpine3.17-r1`, `alpine3.17`, `alpine`, `latest`][d1]
+- [`alpine3.17-r2`, `alpine3.17`, `alpine`, `latest`][d1]
 
 
 
@@ -73,7 +73,7 @@ docker run --rm -i -v <local-dest-path>:/mnt instrumentisto/rsync-ssh \
 
 
 
-## Image versions
+## Image tags
 
 
 ### `alpine`
@@ -96,7 +96,7 @@ This is a multi-platform image.
 
 Concrete `N` image revision tag of the concrete minor `X.Y` [Alpine][1] version.
 
-Once build, it's never updated.
+Once built, it's never updated.
 
 This is a multi-platform image.
 
@@ -105,7 +105,7 @@ This is a multi-platform image.
 
 Concrete `N` image revision tag of the concrete minor `X.Y` [Alpine][1] version on the concrete `os` and `arch`.
 
-Once build, it's never updated.
+Once built, it's never updated.
 
 This is a single-platform image.
 
