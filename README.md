@@ -54,13 +54,13 @@ docker run --rm -i -v <volume-name>:/volume -v $(pwd):/mnt instrumentisto/rsync-
 Transferring file from remote host with `rsync` to local host without `rsync`:
 ```bash 
 docker run --rm -i -v <local-dest-path>:/mnt instrumentisto/rsync-ssh \
-    rsync -avz <remote host>:<remote soruce path> /mnt/
+    rsync -avz <remote-host>:<remote-src-path> /mnt/
 ```
 
 Transferring file from remote host without `rsync` to local host with `rsync`:
 ```bash
 rsync -avz --rsync-path="docker run --rm -i -v <remote-src-path>:/mnt instrumentisto/rsync-ssh rsync" \
-    <remote host>:/mnt/ <local-dest-path>
+    <remote-host>:/mnt/ <local-dest-path>
 ```
 
 Transfer file from remote host without `rsync` to local host without `rsync`:
