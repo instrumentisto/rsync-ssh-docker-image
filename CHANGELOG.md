@@ -6,6 +6,18 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## [alpine3.20-r0] · 2024-05-24
+[alpine3.20-r0]: /../../tree/alpine3.20-r0
+
+[Diff](/../../compare/alpine3.19-r1...alpine3.20-r0)
+
+### Upgraded
+
+- [Alpine Linux] 3.20: <https://www.alpinelinux.org/posts/Alpine-3.20.0-released.html>
+
+
+
+
 ## [alpine3.19-r1] · 2024-01-29
 [alpine3.19-r1]: /../../tree/alpine3.19-r1
 
