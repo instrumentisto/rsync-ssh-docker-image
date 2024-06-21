@@ -16,7 +16,7 @@ Rsync + SSH Docker image
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`alpine3.20-r0`, `alpine3.20`, `alpine`, `latest`][d1]
+- [`alpine3.20-r1`, `alpine3.20`, `alpine`, `latest`][d1]
 
 
 
