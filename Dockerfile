@@ -2,7 +2,7 @@
 ARG alpine_ver=3.20
 FROM alpine:${alpine_ver}
 
-ARG build_rev=2
+ARG build_rev=3
 
 
 # Install Rsync and SSH.
