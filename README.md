@@ -2,7 +2,7 @@ Rsync + SSH Docker image
 ========================
 
 [![Release](https://img.shields.io/github/v/release/instrumentisto/rsync-ssh-docker-image "Release")](https://github.com/instrumentisto/rsync-ssh-docker-image/releases)
-[![CI](https://github.com/instrumentisto/rsync-ssh-docker-image/workflows/CI/badge.svg?branch=main "CI")](https://github.com/instrumentisto/rsync-ssh-docker-image/actions?query=workflow%3ACI+branch%3Amain)
+[![CI](https://github.com/instrumentisto/rsync-ssh-docker-image/actions/workflows/ci.yml/badge.svg?branch=main "CI")](https://github.com/instrumentisto/rsync-ssh-docker-image/actions?query=workflow%3ACI+branch%3Amain)
 [![Docker Hub](https://img.shields.io/docker/pulls/instrumentisto/rsync-ssh?label=Docker%20Hub%20pulls "Docker Hub pulls")](https://hub.docker.com/r/instrumentisto/rsync-ssh)
 
 [Docker Hub](https://hub.docker.com/r/instrumentisto/rsync-ssh)
@@ -16,7 +16,7 @@ Rsync + SSH Docker image
 
 ## Supported tags and respective `Dockerfile` links
 
-- [`alpine3.21-r2`, `alpine3.21`, `alpine`, `latest`][d1]
+- [`alpine3.21-r3`, `alpine3.21`, `alpine`, `latest`][d1]
 
 
 
