@@ -13,5 +13,6 @@ RUN apk update \
             openssh-client-default \
             sshpass \
             ca-certificates tzdata \
+            gettext-envsubst \
  && update-ca-certificates \
  && rm -rf /var/cache/apk/*
