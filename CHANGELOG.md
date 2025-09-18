@@ -6,6 +6,20 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
+## main
+
+[Diff](/../../compare/alpine3.22-r1...main)
+
+### Added
+
+- `envsubst` utility. ([#29], [#28])
+
+[#28]: /../../issues/28
+[#29]: /../../pull/29
+
+
+
+
 ## [alpine3.22-r1] · 2025-07-16
 [alpine3.22-r1]: /../../tree/alpine3.22-r1
 
