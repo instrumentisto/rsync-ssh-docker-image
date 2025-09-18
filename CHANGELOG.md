@@ -12,8 +12,9 @@ All user visible changes to this project will be documented in this file. This p
 
 ### Added
 
-- `envsubst` utility. ([#29])
+- `envsubst` utility. ([#29], [#28])
 
+[#28]: /../../issues/28
 [#29]: /../../pull/29
 
 
