@@ -5,14 +5,13 @@ FROM alpine:${alpine_ver}
 ARG build_rev=1
 
 
-# Install Rsync and SSH.
+# Install Rsync, SSH and others.
 RUN apk update \
  && apk upgrade \
  && apk add --no-cache \
             rsync \
-            openssh-client-default \
-            sshpass \
-            ca-certificates tzdata \
+            openssh-client-default sshpass \
             gettext-envsubst \
+            ca-certificates tzdata \
  && update-ca-certificates \
  && rm -rf /var/cache/apk/*

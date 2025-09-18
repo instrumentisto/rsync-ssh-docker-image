@@ -45,15 +45,6 @@
 }
 
 
-@test "TZ env var works ok" {
-  run docker run --rm --pull never --platform $PLATFORM \
-                 -e TZ=Asia/Tokyo \
-                 --entrypoint sh $IMAGE -c \
-    'date +%Z'
-  [ "$status" -eq 0 ]
-  [ "$output" = "JST" ]
-}
-
 @test "envsubst is installed" {
   run docker run --rm --pull never --platform $PLATFORM \
                  --entrypoint sh $IMAGE -c \
@@ -66,4 +57,14 @@
                  --entrypoint sh $IMAGE -c \
     'envsubst --help'
   [ "$status" -eq 0 ]
+}
+
+
+@test "TZ env var works ok" {
+  run docker run --rm --pull never --platform $PLATFORM \
+                 -e TZ=Asia/Tokyo \
+                 --entrypoint sh $IMAGE -c \
+    'date +%Z'
+  [ "$status" -eq 0 ]
+  [ "$output" = "JST" ]
 }
