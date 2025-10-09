@@ -6,13 +6,18 @@ All user visible changes to this project will be documented in this file. This p
 
 
 
-## main
+## [alpine3.22-r2] · 2025-10-09
+[alpine3.22-r2]: /../../tree/alpine3.22-r2
 
-[Diff](/../../compare/alpine3.22-r1...main)
+[Diff](/../../compare/alpine3.22-r1...alpine3.22-r2)
 
 ### Added
 
 - `envsubst` utility. ([#29], [#28])
+
+### Security updated
+
+- [Alpine Linux] 3.22.2: <https://github.com/docker-library/official-images/commit/fdacb511822ac9045ec7ec066c1228f94291139f>
 
 [#28]: /../../issues/28
 [#29]: /../../pull/29
