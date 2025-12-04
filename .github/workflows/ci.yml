@@ -15,6 +15,23 @@ concurrency:
 
 jobs:
 
+  ################
+  # Pull Request #
+  ################
+
+  pr:
+    if: ${{ always() && github.event_name == 'pull_request' }}
+    needs:
+      - build
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - run: ${{ needs.build.result == 'success'
+              && needs.test.result == 'success' }}
+
+
+
+
   ############
   # Building #
   ############
