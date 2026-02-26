@@ -63,7 +63,7 @@ jobs:
 
       - run: make docker.tar to-file=.cache/image.tar
                   tags=build-${{ github.run_number }}-${{ matrix.os }}-${{ matrix.arch }}
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.os }}-${{ matrix.arch }}-${{ github.run_number }}
           path: .cache/image.tar
